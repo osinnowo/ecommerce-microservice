@@ -1,5 +1,6 @@
 package com.ecommerce.service.catalog.service.implementation;
 
+import com.ecommerce.service.catalog.exception.AppItemAlreadyExistsException;
 import com.ecommerce.service.catalog.model.common.BaseResponse;
 import com.ecommerce.service.catalog.model.dto.InventoryDto;
 import com.ecommerce.service.catalog.model.dto.ProductCategoryDto;
@@ -7,7 +8,6 @@ import com.ecommerce.service.catalog.model.dto.ProductDto;
 import com.ecommerce.service.catalog.model.entity.ProductCategoryEntity;
 import com.ecommerce.service.catalog.model.entity.ProductEntity;
 import com.ecommerce.service.catalog.model.mapper.ProductMapper;
-
 import com.ecommerce.service.catalog.model.request.InventoryRequest;
 import com.ecommerce.service.catalog.model.request.ProductRequest;
 import com.ecommerce.service.catalog.proxy.InventoryProxy;
@@ -17,7 +17,6 @@ import com.ecommerce.service.catalog.service.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -31,14 +30,15 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ProductCategoryRepository productCategoryRepository;
-    private final InventoryProxy inventoryProxy;
+    private final InventoryProxy proxy;
 
     @Override
     @Transactional
     public Mono<ProductDto> createProduct(ProductRequest request) {
+
         ProductCategoryEntity category = productCategoryRepository
                 .findById(request.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new AppItemAlreadyExistsException("Category not found"));
 
         ProductEntity entity = ProductMapper.mapFrom(request);
         entity.setCategory(category);
@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
                 .isStockAvailable(request.getIsStockAvailable())
                 .build();
 
-        BaseResponse<InventoryDto> inventoryResponse = inventoryProxy.createInventory(inventoryRequest);
+        BaseResponse<InventoryDto> inventoryResponse = proxy.createInventory(inventoryRequest);
 
         if (inventoryResponse.getStatus()) {
             log.info("Inventory created for product: {}", entity.getId());

@@ -1,7 +1,6 @@
 package com.ecommerce.service.catalog.controllers;
 
 import static com.ecommerce.service.catalog.model.common.BaseResponse.*;
-
 import com.ecommerce.service.catalog.configuration.AppConfiguration;
 import com.ecommerce.service.catalog.model.common.BaseResponse;
 import com.ecommerce.service.catalog.model.dto.ProductCategoryDto;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
-
 import java.util.List;
 
 //.LazyInitializationException
