@@ -1,0 +1,58 @@
+version: '3'
+services:
+  catalog-service-database:
+    image: postgres
+    restart: always
+    ports:
+      - "5430:5432"
+    environment:
+      - POSTGRES_USER=master
+      - POSTGRES_PASSWORD=m@ster@2024!!
+      - POSTGRES_DB=catalog-database
+    volumes:
+      - ./volume/catalog-service-database:/var/lib/postgresql/data
+    networks:
+      - ecommerce-system-network
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "root", "-d", "catalog-database" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  inventory-service-database:
+    image: postgres
+    restart: always
+    ports:
+      - "5440:5432"
+    environment:
+      - POSTGRES_USER=master
+      - POSTGRES_PASSWORD=m@ster@2024!!
+      - POSTGRES_DB=inventory-database
+    volumes:
+      - ./volume/inventory-service-database:/var/lib/postgresql/data
+    networks:
+      - ecommerce-system-network
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "root", "-d", "inventory-database" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  postgres-admin:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - "9000:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@ecommerce.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    volumes:
+      - ./volume/postgres-admin:/var/lib/pgadmin
+    networks:
+      - ecommerce-system-network
+    depends_on:
+      - catalog-service-database
+      - inventory-service-database
+        
+networks:
+  ecommerce-system-network:
