@@ -19,9 +19,10 @@ public class ProductRequest {
     @NotBlank(message = "Product description is required")
     private String description;
 
-    @NotBlank(message = "Product price is required")
     private Double price;
-
-    @NotBlank(message = "Product category id is required")
     private Long categoryId;
+    private Long stockTotal;
+    private Long stockReserved;
+    private Long stockSold;
+    private Boolean isStockAvailable;
 }

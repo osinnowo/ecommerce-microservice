@@ -1,5 +1,6 @@
 package com.ecommerce.service.inventory.service.implementation;
 
+import com.ecommerce.service.inventory.app.AppItemAlreadyExistException;
 import com.ecommerce.service.inventory.model.dto.InventoryDto;
 import com.ecommerce.service.inventory.model.dto.InventoryImageDto;
 import com.ecommerce.service.inventory.model.entity.InventoryEntity;
@@ -20,9 +21,14 @@ public final class InventoryServiceImpl implements InventoryService {
 
     @Override
     public Mono<InventoryDto> createInventory(InventoryRequest request) {
-        //TODO: Check if the inventory already exists
+
+        repository.findById(request.getInventoryId()).ifPresent(inventoryEntity -> {
+            throw new AppItemAlreadyExistException("Inventory already exists");
+        });
+
         InventoryEntity entity = InventoryMapper.mapFrom(request);
         repository.saveAndFlush(entity);
+
         return Mono.just(InventoryMapper.mapFrom(entity));
     }
 
