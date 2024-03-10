@@ -25,9 +25,6 @@ public class ProductEntity extends BaseEntity<ProductEntity> {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false)
-    private Integer quantityAvailable;
-
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
 

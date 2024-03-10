@@ -22,6 +22,6 @@ public class ProductCategoryEntity extends BaseEntity<ProductCategoryEntity> {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ProductEntity> products;
 }
