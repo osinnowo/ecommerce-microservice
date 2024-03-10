@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.support.WebExchangeBindException;
 import org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.server.MethodNotAllowedException;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -25,5 +26,11 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
     public Mono<ResponseEntity<Object>> handleMethodNotAllowedException(MethodNotAllowedException ex, HttpHeaders headers, HttpStatusCode status, ServerWebExchange exchange) {
         handleExceptionInternal(ex, null, headers, status, exchange);
         return Mono.just(new ResponseEntity<>(BaseResponse.fail(ex.getMessage()), HttpStatus.UNPROCESSABLE_ENTITY));
+    }
+
+    @Override
+    public Mono<ResponseEntity<Object>> handleResponseStatusException(ResponseStatusException ex, HttpHeaders headers, HttpStatusCode status, ServerWebExchange exchange) {
+        handleExceptionInternal(ex, null, headers, status, exchange);
+        return Mono.just(new ResponseEntity<>(BaseResponse.fail(ex.getMessage()), status));
     }
 }
