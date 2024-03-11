@@ -13,6 +13,10 @@ spring:
     hibernate:
       ddl-auto: update
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8300/eureka
 # Server Properties
 server:
   port: 8200
