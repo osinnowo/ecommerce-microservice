@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "inventory-service", url = "http://localhost:8201")
+@FeignClient(name = "inventory-service")
 public interface InventoryProxy {
     @PostMapping(
         value = "/inventory",
