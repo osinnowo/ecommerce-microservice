@@ -11,8 +11,6 @@ INSERT INTO product_categories (name, description, date_created, date_modified, 
 INSERT INTO product_categories (name, description, date_created, date_modified, is_soft_deleted) VALUES ('Beauty & Personal Care', 'Category for beauty products and personal care items.', '2024-03-10', '2024-03-10', false);
 
 INSERT INTO product_categories (name, description, date_created, date_modified, is_soft_deleted) VALUES ('Toys & Games', 'Category for children''s toys and games.', '2024-03-10', '2024-03-10', false);
-
 INSERT INTO product_categories (name, description, date_created, date_modified, is_soft_deleted) VALUES ('Automotive', 'Category for automotive parts and accessories.', '2024-03-10', '2024-03-10', false);
-
 INSERT INTO product_categories (name, description, date_created, date_modified, is_soft_deleted) VALUES ('Health & Wellness', 'Category for health-related products and wellness items.', '2024-03-10', '2024-03-10', false);
 INSERT INTO product_categories (name, description, date_created, date_modified, is_soft_deleted) VALUES ('Pet Supplies', 'Category for pet food, toys, and accessories.', '2024-03-10', '2024-03-10', false);
